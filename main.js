@@ -10,7 +10,7 @@ const networkCtx = networkCanvas.getContext("2d");
 const road = new Road(carCanvas.width/2, carCanvas.width * 0.9);
 
 const N = 500; //The number of simulated cars each run
-const mutationAmount = 0.1; //The amount the network gets mutated
+const mutationAmount = 0.4; //The amount the network gets mutated
 
 const cars = generateCars(N);
 let bestCar = cars[0];
@@ -21,7 +21,7 @@ if(localStorage.getItem("bestBrain")) {
         cars[i].brain = JSON.parse(localStorage.getItem("bestBrain"));
 
         if(i != 0) { //One car will keep the former best network
-            NeuralNetwork.mutate(cars[i].brain, 0.04);
+            NeuralNetwork.mutate(cars[i].brain, mutationAmount);
         }
     }
 }

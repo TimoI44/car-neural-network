@@ -1,4 +1,5 @@
 class NeuralNetwork {
+
     constructor(neuronCounts) {
         this.levels = [];
 
@@ -97,7 +98,7 @@ class Level {
 
             //loops through all inputs and adds them to sum
             for(let j = 0; j < level.inputs.length; j++) {
-                sum += level.inputs[i] * level.weights[j][i];
+                sum += level.inputs[j] * level.weights[j][i];
             }
 
             if(sum > level.biases[i]) {
