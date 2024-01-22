@@ -9,8 +9,10 @@ const networkCtx = networkCanvas.getContext("2d");
 //Setting up cars and roads
 const road = new Road(carCanvas.width/2, carCanvas.width * 0.9);
 
+//EDITABLE VARIABLES
 const N = 500; //The number of simulated cars each run
-const mutationAmount = 0.4; //The amount the network gets mutated
+const trafficCarCount = 30; //Traffic cars that should be spawned
+const mutationAmount = 0.03; //The amount the network gets mutated
 
 const cars = generateCars(N);
 let bestCar = cars[0];
@@ -26,13 +28,9 @@ if(localStorage.getItem("bestBrain")) {
     }
 }
 
-const traffic = [
-    new Car(road.getLaneCenter(1), -100, 26, 50, 0.2, 2, "DUMMY"),
-    new Car(road.getLaneCenter(0), -300, 26, 50, 0.2, 2, "DUMMY"),
-    new Car(road.getLaneCenter(2), -300, 26, 50, 0.2, 2, "DUMMY"),
-]
+const traffic = generateTraffic(trafficCarCount);
 
-//Automates learning process but is pretty shit
+//Automates learning process
 /*setTimeout(() => { 
     save();
     location.reload()
@@ -61,6 +59,16 @@ function generateCars(N) {
         cars.push(new Car(road.getLaneCenter(1), 300, 26, 50, 0.2, 5, "AI"))
     }
     return cars;
+}
+
+function generateTraffic(N) {
+    const traffic = [];
+    for(let i = 0; i < N; i++) {
+        traffic.push(new Car(road.getLaneCenter(randomIntFromInterval(0, 2)), //Random road
+         -1 * (i*100), // Random Y
+          26, 50, 0.2, 2, "DUMMY"))
+    }
+    return traffic;
 }
 
 //Running all update methods and animates the scene
